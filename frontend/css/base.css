@@ -1,0 +1,130 @@
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #eef0f4;
+  --surface: #ffffff;
+  --surface-alt: #f3f4f7;
+  --border: #e1e3ea;
+
+  --ink: #1a2230;
+  --ink-dim: #737a89;
+  --ink-faint: #a3a9b5;
+
+  /* แบรนด์: น้ำเงิน (โครงสร้าง/navigation) + ส้ม (การกระทำ/CTA) + เทา (พื้นผิวกลาง) — จากโทนโลโก้คณะ/ภาควิชา */
+  --navy: #0d3f8f;
+  --navy-deep: #04214f;
+  --navy-soft: #e7ecf7;
+  --orange: #f0500e;
+  --orange-deep: #c73f08;
+  --orange-soft: #fdece3;
+  --gray-steel: #8891a1;
+
+  --accent: var(--navy);
+  --accent-2: var(--navy-deep);
+  --accent-soft: var(--navy-soft);
+
+  --pass: #1f9d63;
+  --pass-soft: #e6f7ee;
+  --fail: #dd5353;
+  --fail-soft: #fceceb;
+  --na: #8b93a1;
+  --na-soft: #eef0f3;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 1px 2px rgba(20, 30, 45, 0.04), 0 12px 26px -12px rgba(20, 30, 45, 0.16);
+  --font-ui: "Inter", "Noto Sans Thai", -apple-system, "Helvetica Neue", sans-serif;
+  --font-head: "Sarabun", "Noto Sans Thai", -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono: "SFMono-Regular", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100dvh;
+  background-image: radial-gradient(circle at 1px 1px, rgba(13, 63, 143, 0.06) 1px, transparent 0);
+  background-size: 16px 16px;
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, .section-title { font-family: var(--font-head); letter-spacing: -0.005em; }
+
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 20px 20px 18px;
+  background: linear-gradient(155deg, #ffffff 0%, var(--accent-soft) 130%);
+  border-bottom: 1px solid var(--border);
+}
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--orange) 0%, var(--orange-deep) 55%, transparent 100%);
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.topbar__brand:active { opacity: 0.75; }
+
+.topbar__mark {
+  flex-shrink: 0;
+  height: 46px;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+  border-radius: 11px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 12px -2px rgba(13, 63, 143, 0.45);
+}
+.topbar__mark img { display: block; height: 100%; width: auto; }
+
+.topbar__title { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.topbar__title-main { font-family: var(--font-head); font-size: 13px; font-weight: 700; line-height: 1.4; letter-spacing: -0.005em; }
+
+/* ---------- Page layout ---------- */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 480px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 18px 16px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.view { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+/* ---------- Utility ---------- */
+[hidden] { display: none !important; }

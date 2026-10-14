@@ -1,0 +1,99 @@
+/* หน้าลงทะเบียน + ปุ่ม/แถวลงทะเบียนบนหน้าแรก */
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.section-title::before {
+  content: "";
+  flex-shrink: 0;
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--orange) 0%, var(--orange-deep) 100%);
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn--outline {
+  background: var(--surface);
+  border: 1.5px solid var(--navy);
+  color: var(--navy-deep);
+  font-weight: 700;
+}
+
+.success-msg {
+  color: var(--pass);
+  background: var(--pass-soft);
+  font-size: 13.5px;
+  text-align: center;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  margin: 0;
+}
+
+/* ---------- แถวแก้ไข/ลบในรายการผู้ใช้/จอภาพ ---------- */
+.row-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+/* โหมดแสดงผลปกติ: วางปุ่มไว้ชิดขวาในแถวเดียวกับชื่อ ไม่กินพื้นที่แถวแยก */
+.row-actions--inline {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+  flex-shrink: 0;
+}
+.link-btn--danger { color: var(--fail); }
+
+.edit-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.edit-fields .field__input { padding: 9px 11px; font-size: 14px; }
+
+.row-hint {
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  margin: 8px 0 0;
+}
+#register-display-list .history-card { cursor: default; }
+
+/* ---------- สมัครสมาชิก / ยืนยันอีเมล / โปรไฟล์ ---------- */
+.signup-verify-desc { margin: 0; font-size: 13.5px; color: var(--ink-dim); }
+.signup-demo-note {
+  margin: 0;
+  padding: 11px 13px;
+  background: var(--orange-soft);
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--orange-deep);
+}
+.signup-demo-note strong { font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+.profile-current-value { margin: 0; font-size: 13.5px; color: var(--ink-dim); }
+.profile-current-value strong { color: var(--ink); }
+
+.profile-email-verify-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border);
+}

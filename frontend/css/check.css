@@ -1,0 +1,150 @@
+/* หน้าทดสอบ: capture + analyze + results */
+
+.capture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 30px 14px;
+  border: 1.5px dashed #c9d3de;
+  border-radius: var(--radius-md);
+  background: var(--surface-alt);
+}
+.capture__icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 50%;
+}
+.capture__hint { font-size: 13.5px; color: var(--ink-dim); margin: 0; max-width: 30ch; line-height: 1.5; }
+.capture__actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 2px; }
+
+.preview__frame { position: relative; border-radius: var(--radius-md); overflow: hidden; background: #10161c; }
+.preview__frame img {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+}
+.preview__remove {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(20, 24, 30, 0.55);
+  color: #fff;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+.preview__remove:active { opacity: 0.7; }
+
+.reference-img {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  background: #10161c;
+}
+.reference-hint { font-size: 12.5px; color: var(--ink-dim); margin: 0; text-align: center; }
+
+.card--results { padding: 16px; gap: 12px; }
+
+.result-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.result-meta__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+.result-meta__label { color: var(--ink-dim); flex-shrink: 0; }
+.result-meta__value { color: var(--ink); font-weight: 600; text-align: right; }
+
+.result-processed-img {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  background: #10161c;
+}
+
+.result-overall {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px 14px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+.result-overall.pass { background: var(--pass-soft); color: var(--pass); }
+.result-overall.fail { background: var(--fail-soft); color: var(--fail); }
+
+.error-msg {
+  color: var(--fail);
+  font-size: 13.5px;
+  text-align: center;
+  padding: 0 16px;
+}
+
+/* ---------- เข้าสู่ระบบ / แถบผู้ใช้ปัจจุบัน ---------- */
+.check-session {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 15px;
+}
+.check-session__text { font-size: 13.5px; color: var(--ink-dim); }
+.check-session__text strong { color: var(--ink); }
+
+/* ---------- เลือกชุดทดสอบ / เลือกการประเมิน ---------- */
+.choice-list { display: flex; flex-direction: column; gap: 10px; }
+
+.choice-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 13px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-alt);
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+.choice-btn__dot {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+}
+.choice-btn.is-selected {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+}
+.choice-btn.is-selected .choice-btn__dot {
+  border-color: var(--navy);
+  background: var(--navy);
+  box-shadow: inset 0 0 0 3px var(--navy-soft);
+}

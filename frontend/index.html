@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TG18 Display QA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/check.css">
+<link rel="stylesheet" href="css/history.css">
+<link rel="stylesheet" href="css/compare.css">
+<link rel="stylesheet" href="css/register.css">
+<link rel="stylesheet" href="css/drawer.css">
+<link rel="stylesheet" href="css/report.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <button class="topbar__brand" id="topbar-home-btn" aria-label="กลับหน้าแรก">
+      <div class="topbar__mark">
+        <img src="assets/hero-icon-v2.png" alt="AAPM TG18">
+      </div>
+      <div class="topbar__title">
+        <span class="topbar__title-main">ระบบประเมินคุณภาพการแสดงผลจอภาพ<br>ทางการแพทย์โดยใช้มาตรฐาน AAPM TG18</span>
+      </div>
+    </button>
+    <button class="menu-btn" id="menu-toggle" aria-label="เปิดเมนู" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+
+  <div class="menu-overlay" id="menu-overlay" hidden></div>
+
+  <nav class="drawer" id="drawer" hidden aria-label="เมนูหลัก">
+    <div class="drawer__head">
+      <span class="drawer__head-title">เมนู</span>
+      <button class="drawer__close" id="drawer-close" aria-label="ปิดเมนู">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <button class="drawer__item is-active" id="tab-home" data-view="home">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11l8-6.5 8 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>หน้าแรก</span>
+    </button>
+    <button class="drawer__item" id="tab-register" data-view="register">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12h6M9 16h6M9 8h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      <span>การลงทะเบียนจอภาพ</span>
+    </button>
+    <button class="drawer__item" id="tab-check" data-view="check">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 10l2.5 2.5L16 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>การทดสอบ</span>
+    </button>
+    <button class="drawer__item" id="tab-history" data-view="history">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/></svg>
+      <span>ประวัติการทดสอบ</span>
+    </button>
+    <button class="drawer__item" id="tab-compare" data-view="compare">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 3v18M16 3v18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4 8l4-4 4 4M20 16l-4 4-4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>เปรียบเทียบผล</span>
+    </button>
+    <button class="drawer__item" id="tab-profile" data-view="profile">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.3" stroke="currentColor" stroke-width="1.7"/><path d="M5 20c1.2-3.8 4.2-5.7 7-5.7s5.8 1.9 7 5.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <span>โปรไฟล์</span>
+    </button>
+  </nav>
+
+  <main>
+
+    <!-- ========== หน้า: หน้าแรก ========== -->
+    <section class="view" id="view-home">
+      <section class="card hero-card">
+        <div class="hero-institution">
+          <div class="hero-institution__logos">
+            <img class="hero-logo" src="assets/logo-ahs.png" alt="ตราคณะสหเวชศาสตร์ มหาวิทยาลัยนเรศวร">
+            <img class="hero-logo" src="assets/logo-csit.png" alt="ตราภาควิชาวิทยาการคอมพิวเตอร์และเทคโนโลยีสารสนเทศ">
+          </div>
+          <p class="hero-institution__caption">ภาควิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยนเรศวร</p>
+        </div>
+
+        <div class="hero-desc">
+          <p>เว็บไซต์นี้จัดทำขึ้นเพื่อสาธิตระบบต้นแบบประกอบวิทยานิพนธ์รายวิชา <strong>254497 Undergraduate Thesis</strong> สาขาวิชาวิทยาการคอมพิวเตอร์ มหาวิทยาลัยนเรศวร</p>
+          <p>ระบบมีวัตถุประสงค์เพื่อสาธิตการประเมินคุณภาพจอแสดงผลทางการแพทย์ (Medical Display Quality Assessment) ตามมาตรฐาน <strong>AAPM TG18</strong> โดยประยุกต์ใช้ภาพถ่ายจากสมาร์ทโฟนร่วมกับเทคนิค <strong>Machine Learning และ Deep Learning</strong> <a href="#" id="hero-detail-link">รายละเอียด</a></p>
+          <p class="hero-desc__note">ทั้งนี้ ระบบยังอยู่ในขั้นตอนการวิจัยและพัฒนา ผลการประเมินที่ปรากฏบนเว็บไซต์นี้จัดทำขึ้นเพื่อวัตถุประสงค์ทางการศึกษาและการทดสอบเท่านั้น</p>
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn btn--outline" id="hero-register-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 12h6M9 16h6M9 8h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 3h7l4 4v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            สมัครสมาชิก
+          </button>
+          <button class="btn btn--submit" id="hero-start-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            เริ่มทดสอบ
+          </button>
+        </div>
+      </section>
+
+      <div class="home-footer-links">
+        <button class="footer-link" id="home-reference-link">
+          เอกสารอ้างอิง
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="footer-link" id="home-team-link">
+          ทีมผู้พัฒนา
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="footer-link" id="home-faq-link">
+          คำถามที่พบบ่อย (FAQ)
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ========== หน้า: เอกสารอ้างอิง ========== -->
+    <section class="view" id="view-reference" hidden>
+      <section class="card">
+        <div class="card-head-row">
+          <h2 class="section-title">เอกสารอ้างอิง</h2>
+          <button class="back-link" id="reference-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <ol class="reference-list">
+          <li>E. Samei et al., “Assessment of display performance criteria in medical imaging systems,” <em>Medical Physics</em>, vol. 32, no. 4, pp. 1205–1225, 2005.</li>
+          <li>กรมวิทยาศาสตร์การแพทย์ กระทรวงสาธารณสุข. (2568). <em>มาตรฐานคุณภาพเครื่องอัลตราซาวด์วินิจฉัยทางการแพทย์ (Quality Standards of Medical Diagnostic Ultrasound Machines)</em>. พิมพ์ครั้งที่ 1. กรุงเทพฯ: กรมวิทยาศาสตร์การแพทย์.</li>
+        </ol>
+      </section>
+    </section>
+
+    <!-- ========== หน้า: รายละเอียดชุดทดสอบ ========== -->
+    <section class="view" id="view-testset" hidden>
+      <section class="card">
+        <div class="card-head-row">
+          <h2 class="section-title section-title--lg">รายละเอียดชุดทดสอบ</h2>
+          <button class="back-link" id="testset-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+      </section>
+
+      <section class="card testset-card">
+        <img class="testset-card__img" src="images/about/ct.png" alt="TG18-CT Pattern">
+        <h3 class="testset-card__name">TG18-CT</h3>
+
+        <div class="testset-card__section">
+          <h4>ลักษณะของชุดทดสอบ</h4>
+          <p>ชุดทดสอบประกอบด้วยแถบความส่องสว่าง (Luminance Patches) จำนวน 16 ช่อง เรียงลำดับความสว่างจากระดับเข้มที่สุดถึงสว่างที่สุด ใช้สำหรับประเมินว่าจอแสดงผลตอบสนองต่อค่าความส่องสว่างในแต่ละระดับได้อย่างถูกต้องตามมาตรฐานหรือไม่</p>
+        </div>
+
+        <div class="testset-card__section">
+          <h4>วิธีการวัด</h4>
+          <p>ทำการวัดค่าความส่องสว่างของแต่ละช่อง แล้วตรวจสอบว่าการเปลี่ยนแปลงระดับความสว่างจากช่องที่มืดที่สุดไปยังช่องที่สว่างที่สุดเป็นไปอย่างต่อเนื่องและเรียงลำดับถูกต้องตามเส้นโค้งมาตรฐาน DICOM Grayscale Standard Display Function (GSDF)</p>
+        </div>
+
+        <div class="testset-card__section">
+          <h4>วิธีการพิจารณา</h4>
+          <p>พิจารณาการไล่ระดับความส่องสว่างของทั้ง 16 ช่อง โดยแต่ละช่องจะต้องสามารถแยกความแตกต่างของความสว่างจากช่องข้างเคียงได้ และเรียงลำดับจากระดับเข้มไปสว่างอย่างเป็นลำดับ โดยไม่ปรากฏช่องที่มีความสว่างสลับลำดับ</p>
+        </div>
+
+        <div class="testset-card__section">
+          <h4>เกณฑ์การประเมิน</h4>
+          <p class="testset-card__criteria testset-card__criteria--pass"><strong>ผ่านเกณฑ์</strong> — การไล่ระดับความส่องสว่างเป็นไปอย่างต่อเนื่องและเรียงลำดับถูกต้อง แสดงว่าจอแสดงผลตอบสนองต่อความส่องสว่างสอดคล้องตามมาตรฐาน</p>
+          <p class="testset-card__criteria testset-card__criteria--fail"><strong>ไม่ผ่านเกณฑ์</strong> — ปรากฏช่องที่มีความส่องสว่างผิดลำดับ หรือไม่สามารถแยกระดับความสว่างระหว่างช่องได้ แสดงว่าการตอบสนองความส่องสว่างของจอแสดงผลไม่เป็นไปตามมาตรฐาน</p>
+        </div>
+      </section>
+
+      <section class="card testset-card">
+        <img class="testset-card__img" src="images/about/qc.png" alt="TG18-QC Pattern">
+        <h3 class="testset-card__name">TG18-QC</h3>
+
+        <div class="testset-card__section">
+          <h4>ลักษณะของชุดทดสอบ</h4>
+          <p>ชุดทดสอบสำหรับการควบคุมคุณภาพโดยรวม ซึ่งในระบบนี้ใช้ประเมินความสามารถของจอแสดงผลใน 3 ด้าน ตามบริเวณที่กำหนด (กรอบสีแดง) โดยมุ่งเน้นการมองเห็นรายละเอียดและตัวอักษรในสภาวะคอนทราสต์ต่ำ ทั้งในโทนมืดและโทนสว่าง</p>
+        </div>
+
+        <div class="testset-card__section">
+          <h4>วิธีการวัด</h4>
+          <p>ตรวจสอบความสามารถในการมองเห็นบริเวณที่กำหนด จำนวน 3 ตำแหน่ง ได้แก่</p>
+          <ul class="testset-card__list">
+            <li><strong>การแยกรายละเอียดในโทนสว่าง</strong> — พิจารณาว่าสี่เหลี่ยมความสว่างต่ำบนพื้นสว่างสามารถแยกออกจากพื้นหลังได้หรือไม่</li>
+            <li><strong>การมองเห็นตัวอักษรคอนทราสต์ต่ำในโทนมืด</strong> — พิจารณาว่าข้อความ "QUALITY CONTROL" บนพื้นสีเข้มสามารถอ่านได้หรือไม่</li>
+            <li><strong>การมองเห็นตัวอักษรคอนทราสต์ต่ำในโทนสว่าง</strong> — พิจารณาว่าข้อความ "QUALITY CONTROL" บนพื้นสีสว่างสามารถอ่านได้หรือไม่</li>
+          </ul>
+        </div>
+
+        <div class="testset-card__section">
+          <h4>วิธีการพิจารณา</h4>
+          <p>พิจารณาแต่ละบริเวณตามกรอบที่กำหนด จอแสดงผลที่มีคุณภาพจะสามารถแสดงรายละเอียดที่มีความสว่างต่ำและตัวอักษรคอนทราสต์ต่ำให้มองเห็นได้อย่างชัดเจน ทั้งในบริเวณโทนมืดและโทนสว่าง</p>
+        </div>
+
+        <div class="testset-card__section">
+          <h4>เกณฑ์การประเมิน</h4>
+          <p class="testset-card__criteria testset-card__criteria--pass"><strong>ผ่านเกณฑ์</strong> — สามารถมองเห็นรายละเอียดในโทนสว่าง และอ่านตัวอักษรคอนทราสต์ต่ำได้ทั้งในโทนมืดและโทนสว่าง</p>
+          <p class="testset-card__criteria testset-card__criteria--fail"><strong>ไม่ผ่านเกณฑ์</strong> — รายละเอียดในโทนสว่างไม่ปรากฏ หรือไม่สามารถอ่านตัวอักษรในบริเวณโทนมืดหรือโทนสว่างได้ แสดงว่าจอแสดงผลมีการตัดทอนรายละเอียด (Clipping) ในช่วงความสว่างสูงสุดหรือต่ำสุด</p>
+        </div>
+      </section>
+    </section>
+
+    <!-- ========== หน้า: ทีมผู้พัฒนา ========== -->
+    <section class="view" id="view-team" hidden>
+      <section class="card team-card">
+        <div class="card-head-row">
+          <h2 class="section-title">ทีมผู้พัฒนา</h2>
+          <button class="back-link" id="team-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <div class="team-group">
+          <h3 class="team-group__label">ที่ปรึกษา</h3>
+          <ul class="team-list">
+            <li>ผู้ช่วยศาสตราจารย์ ดร.สุธาสินี ฉิมเล็ก <span class="team-list__faculty">(คณะวิทยาศาสตร์)</span></li>
+            <li>ผู้ช่วยศาสตราจารย์ ดร.ธัญรัตน์ ชูศิลป์ <span class="team-list__faculty">(คณะสหเวชศาสตร์)</span></li>
+          </ul>
+        </div>
+        <div class="team-group">
+          <h3 class="team-group__label">ผู้พัฒนาระบบ</h3>
+          <ul class="team-list">
+            <li>นายณัฐวุฒิ โรจน์บุณถึง <span class="team-list__faculty">(คณะวิทยาศาสตร์)</span></li>
+            <li>นายอธิวัฒน์ ยศปัญญา <span class="team-list__faculty">(คณะวิทยาศาสตร์)</span></li>
+            <li>นางสาววรฤทัย มหาวงษ์ <span class="team-list__faculty">(คณะวิทยาศาสตร์)</span></li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <!-- ========== หน้า: คำถามที่พบบ่อย (FAQ) ========== -->
+    <section class="view" id="view-faq" hidden>
+      <section class="card">
+        <div class="card-head-row">
+          <h2 class="section-title">คำถามที่พบบ่อย (FAQ)</h2>
+          <button class="back-link" id="faq-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3 class="faq-item__q">ถ่ายภาพด้วย iPhone แล้วอัปโหลดไม่ได้</h3>
+            <p class="faq-item__a">ไฟล์จาก iPhone อาจเป็นนามสกุล HEIC กรุณาแปลงเป็น JPG หรือ PNG ก่อนอัปโหลด</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q">เหตุใดบางหัวข้อจึงแสดงผลเป็น N/A</h3>
+            <p class="faq-item__a">หมายถึงหัวข้อนั้นยังไม่มีแบบจำลองรองรับในระบบ ซึ่งอยู่ระหว่างการพัฒนาเพิ่มเติม</p>
+          </div>
+          <div class="faq-item">
+            <h3 class="faq-item__q">เหตุใดจึงต้องเลือกชุดทดสอบให้ตรงกับที่แสดงบนจอ</h3>
+            <p class="faq-item__a">เนื่องจากแต่ละชุดทดสอบใช้วิธีประมวลผลภาพและแบบจำลองที่แตกต่างกัน หากเลือกไม่ตรง ผลการประเมินจะไม่ถูกต้อง</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ========== หน้า: คู่มือการใช้งาน ========== -->
+    <section class="view" id="view-guide" hidden>
+      <section class="card guide-prereq-card">
+        <div class="card-head-row">
+          <h2 class="section-title">ข้อกำหนดเบื้องต้น</h2>
+          <button class="back-link" id="guide-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <p class="guide-prereq__intro">ก่อนเริ่มใช้งาน ควรเตรียมสิ่งต่อไปนี้ให้พร้อม</p>
+        <ul class="guide-prereq__list">
+          <li><strong>สมาร์ทโฟนที่มีกล้องถ่ายภาพ</strong> หรือไฟล์ภาพจอแสดงผลที่บันทึกไว้แล้ว รองรับไฟล์ <strong>JPG และ PNG</strong></li>
+          <li><strong>จอแสดงผลทางการแพทย์</strong> ที่แสดงภาพทดสอบมาตรฐาน <strong>TG18</strong> เช่น <a href="images/reference/tg18-ct.png" target="_blank" rel="noopener">TG18-CT</a> หรือ <a href="images/reference/tg18-qc.png" target="_blank" rel="noopener">TG18-QC</a></li>
+          <li><strong>บัญชีผู้ใช้และรหัสผ่าน</strong> สำหรับเข้าสู่ระบบ โดยต้องลงทะเบียนผู้ใช้งานและจอแสดงผลก่อน หากยังไม่มีบัญชี</li>
+          <li><strong>การเชื่อมต่ออินเทอร์เน็ต</strong> สำหรับการใช้งานระบบ</li>
+          <li>ปรับ <strong>แสงสว่างภายในห้องให้สอดคล้องกับสภาพการใช้งานจริง</strong> และคงสภาพแสงให้เหมาะสมตลอดการทดสอบ</li>
+        </ul>
+      </section>
+
+      <section class="card guide-card">
+        <h2 class="section-title">ขั้นตอนการใช้งาน</h2>
+
+        <ol class="guide-steps">
+          <li class="guide-step">
+            <span class="guide-step__num">1</span>
+            <div class="guide-step__text">
+              <strong>ลงทะเบียนและเข้าสู่ระบบ</strong>
+              <p>ลงทะเบียนผู้ใช้งานและจอแสดงผล จากนั้นเข้าสู่ระบบให้เรียบร้อยก่อนเริ่มใช้งาน</p>
+            </div>
+          </li>
+          <li class="guide-step">
+            <span class="guide-step__num">2</span>
+            <div class="guide-step__text">
+              <strong>เลือกจอภาพและชุดทดสอบ</strong>
+              <p>เลือกจอแสดงผลที่ต้องการประเมิน และเลือกชุดทดสอบให้ตรงกับชุดทดสอบที่กำลังแสดงอยู่บนจอจริง จากนั้นถ่ายภาพหรือเลือกไฟล์ภาพให้ตรงกับชุดทดสอบที่เลือก</p>
+
+              <div class="guide-step__sub">
+                <h4 class="guide-step__sub-title">คำแนะนำในการถ่ายภาพ</h4>
+                <ul class="guide-step__list">
+                  <li>ถ่ายให้เห็นชุดทดสอบเต็มจอ ไม่มีส่วนที่ถูกตัดออก</li>
+                  <li>ถือกล้องในแนวตั้งและให้ตั้งฉากกับจอแสดงผลมากที่สุด เพื่อลดความบิดเบี้ยวของภาพ และควรถ่ายภาพให้เห็นมุมทั้งสี่ของภาพทดสอบอย่างครบถ้วน</li>
+                  <li>หลีกเลี่ยงแสงสะท้อนบนหน้าจอ และถ่ายในสภาพแสงที่สม่ำเสมอ</li>
+                </ul>
+              </div>
+
+              <div class="guide-step__sub">
+                <h4 class="guide-step__sub-title">กรณีระบบแจ้งให้ถ่ายภาพใหม่</h4>
+                <p>ระบบจะตรวจสอบคุณภาพของภาพก่อนวิเคราะห์โดยอัตโนมัติ หากภาพเบลอเกินไป ไม่พบขอบจอในภาพ หรือไม่สามารถปรับมุมภาพได้ ระบบจะแจ้งเหตุผลและให้ถ่ายภาพใหม่ กรุณาปฏิบัติตามคำแนะนำที่ปรากฏแล้วถ่ายใหม่อีกครั้ง</p>
+              </div>
+            </div>
+          </li>
+          <li class="guide-step">
+            <span class="guide-step__num">3</span>
+            <div class="guide-step__text">
+              <strong>วิเคราะห์และบันทึกผล</strong>
+              <p>กดปุ่ม "วิเคราะห์" แล้วรอสักครู่ ระบบจะแสดงผลความน่าจะเป็นของคุณภาพจอแสดงผล จากนั้นสามารถเลือกได้ว่าจะ</p>
+              <ul class="guide-step__list">
+                <li><strong>บันทึกผล</strong> — เพื่อจัดเก็บผลการทดสอบไว้ในระบบ หลังบันทึกสามารถดาวน์โหลดผลได้ทันที</li>
+                <li><strong>ทดสอบอีกครั้ง</strong> — เพื่อเริ่มการทดสอบใหม่</li>
+              </ul>
+            </div>
+          </li>
+          <li class="guide-step">
+            <span class="guide-step__num">4</span>
+            <div class="guide-step__text">
+              <strong>ดูประวัติและเปรียบเทียบผล</strong>
+              <ul class="guide-step__list">
+                <li>ดูรายการผลการทดสอบย้อนหลังได้ที่เมนู "ประวัติการทดสอบ" และสามารถดาวน์โหลดผลจากรายการในประวัติได้</li>
+                <li>เปรียบเทียบผลการทดสอบระหว่างครั้งต่าง ๆ ได้ที่เมนู "เปรียบเทียบผล"</li>
+              </ul>
+            </div>
+          </li>
+          <li class="guide-step">
+            <span class="guide-step__num">5</span>
+            <div class="guide-step__text">
+              <strong>ออกจากระบบ</strong>
+              <p>เมื่อใช้งานเสร็จสิ้น ควรกดออกจากระบบทุกครั้งเพื่อความปลอดภัยของข้อมูล</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="guide-tip">
+          <strong>คำแนะนำก่อนเริ่มการทดสอบ</strong>
+          <ol class="guide-tip__list">
+            <li>เปิดหน้าจอล่วงหน้าอย่างน้อย <strong>30 นาที</strong> และแสดงภาพทดสอบ <strong>TG18-CT หรือ TG18-QC</strong> ตามรายการประเมิน</li>
+            <li>กำหนดระยะห่างระหว่างกล้องกับหน้าจอประมาณ <strong>หนึ่งช่วงแขน (65 ซม.)</strong> เพื่อให้สามารถถ่ายภาพครอบคลุมพื้นที่ทดสอบและเห็น<strong>มุมทั้งสี่</strong>ของภาพทดสอบอย่างครบถ้วน</li>
+            <li>ตรวจสอบและทำความสะอาดหน้าจอให้ปราศจาก <strong>รอยนิ้วมือและฝุ่นละออง</strong> ด้วยผ้าไร้ฝุ่น (lint-free cloth) หรือตามคำแนะนำของบริษัทผู้ผลิต</li>
+            <li>ทำความสะอาด<strong>เลนส์กล้อง</strong>ก่อนถ่ายภาพ โดยใช้ผ้าเช็ดเลนส์หรือผ้าไมโครไฟเบอร์ที่สะอาด เพื่อป้องกันฝุ่นและคราบที่อาจส่งผลต่อคุณภาพของภาพ</li>
+            <li>ปรับ <strong>แสงสว่างภายในห้องให้สอดคล้องกับสภาพการใช้งานจริง</strong> และคงสภาพแสงให้เหมาะสมตลอดการทดสอบ</li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="card guide-status-card">
+        <h2 class="section-title">ความหมายของสถานะผลลัพธ์</h2>
+        <table class="guide-status-table">
+          <thead>
+            <tr><th>สถานะ</th><th>ความหมาย</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="guide-status-badge guide-status-badge--pass">ผ่าน (Pass)</span></td>
+              <td>จอแสดงผลอยู่ในเกณฑ์มาตรฐานสำหรับหัวข้อนั้น</td>
+            </tr>
+            <tr>
+              <td><span class="guide-status-badge guide-status-badge--fail">ไม่ผ่าน (Fail)</span></td>
+              <td>จอแสดงผลไม่อยู่ในเกณฑ์มาตรฐาน ควรตรวจสอบหรือปรับตั้งค่าจอเพิ่มเติม</td>
+            </tr>
+            <tr>
+              <td><span class="guide-status-badge guide-status-badge--na">N/A</span></td>
+              <td>ระบบไม่สามารถประเมินหัวข้อนี้ได้ในขณะนี้</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="guide-status-note">ระบบจะแสดงค่าความเชื่อมั่น (Confidence) ประกอบผลแต่ละหัวข้อ เพื่อบ่งชี้ระดับความมั่นใจของแบบจำลองในการประเมิน</p>
+      </section>
+
+      <section class="card guide-limitation-card">
+        <h2 class="section-title">ข้อจำกัดของระบบ</h2>
+        <ul class="guide-limitation-list">
+          <li>ระบบยังอยู่ระหว่างการวิจัยและพัฒนา ผลการประเมินมีวัตถุประสงค์เพื่อการศึกษาและการคัดกรองเบื้องต้นเท่านั้น ไม่ควรนำไปใช้ตัดสินคุณภาพจอภาพในการวินิจฉัยทางคลินิกจริง</li>
+          <li>ความแม่นยำของผลลัพธ์ขึ้นอยู่กับคุณภาพของภาพถ่ายและรุ่นของสมาร์ทโฟนที่ใช้ ภาพที่มีแสงสะท้อนหรือถ่ายในมุมเอียงมากอาจทำให้ผลคลาดเคลื่อน</li>
+          <li>บางหัวข้อย่อยอาจยังไม่รองรับการประเมินด้วยแบบจำลอง เนื่องจากข้อจำกัดของข้อมูลฝึกสอน</li>
+        </ul>
+      </section>
+
+      <button class="btn btn--submit" id="guide-start-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        เริ่มทดสอบ
+      </button>
+    </section>
+
+    <!-- ========== หน้า: ลงทะเบียน ========== -->
+    <section class="view" id="view-register" hidden>
+
+      <!-- ----- ต้องเข้าสู่ระบบก่อนถึงจะลงทะเบียนจอภาพได้ ----- -->
+      <section class="card" id="register-login-panel">
+        <div class="card-head-row">
+          <h2 class="section-title">เข้าสู่ระบบก่อนลงทะเบียนจอภาพ</h2>
+          <button class="back-link" id="register-login-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <label class="field">
+          <span class="field__label">อีเมล (Gmail)</span>
+          <input id="register-login-email" class="field__input" type="email" autocomplete="email">
+        </label>
+        <label class="field">
+          <span class="field__label">รหัสผ่าน</span>
+          <input id="register-login-password" class="field__input" type="password" autocomplete="current-password">
+        </label>
+        <button class="btn btn--submit" id="register-login-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          เข้าสู่ระบบ
+        </button>
+        <p class="error-msg" id="register-login-error" hidden></p>
+        <button class="link-btn" id="register-login-signup-link">ยังไม่มีบัญชี? สมัครสมาชิก</button>
+      </section>
+
+      <div class="view" id="register-content" hidden>
+        <!-- ----- ลงทะเบียนจอภาพ ----- -->
+        <section class="card" id="register-display-panel">
+          <div class="card-head-row">
+            <h2 class="section-title">ลงทะเบียนจอภาพ</h2>
+            <button class="back-link" id="register-content-back-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              กลับ
+            </button>
+          </div>
+          <label class="field">
+            <span class="field__label">ชื่อโรงพยาบาล</span>
+            <input id="reg-location" class="field__input" type="text" required>
+          </label>
+          <label class="field">
+            <span class="field__label">ยี่ห้อ/รุ่นจอภาพ</span>
+            <input id="reg-brand-model" class="field__input" type="text" required>
+          </label>
+          <label class="field">
+            <span class="field__label">หมายเลขครุภัณฑ์</span>
+            <input id="reg-asset-number" class="field__input" type="text" required>
+          </label>
+          <button class="btn btn--submit" id="register-display-submit-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+            บันทึกจอภาพ
+          </button>
+          <p class="success-msg" id="register-display-success-msg" hidden></p>
+          <p class="error-msg" id="register-display-error-msg" hidden></p>
+        </section>
+
+        <section class="card" id="register-display-list-panel">
+          <div class="history-head">
+            <h2 class="history-head__title">จอภาพที่ลงทะเบียนแล้ว</h2>
+            <button class="link-btn" id="register-display-list-refresh">รีเฟรช</button>
+          </div>
+          <div class="history-list" id="register-display-list"></div>
+          <div class="empty-state" id="register-display-list-empty" hidden>
+            <p>ยังไม่มีจอภาพที่ลงทะเบียน</p>
+          </div>
+        </section>
+      </div>
+
+    </section>
+
+    <!-- ========== หน้า: สมัครสมาชิก ========== -->
+    <section class="view" id="view-signup" hidden>
+      <section class="card" id="signup-form-panel">
+        <div class="card-head-row">
+          <h2 class="section-title">สมัครสมาชิก</h2>
+          <button class="back-link" id="signup-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <label class="field">
+          <span class="field__label">ชื่อ-นามสกุล <em>*ไม่ต้องใส่คำนำหน้าชื่อ</em></span>
+          <input id="signup-full-name" class="field__input" type="text" required>
+        </label>
+        <label class="field">
+          <span class="field__label">โรงพยาบาล/หน่วยงาน</span>
+          <input id="signup-hospital" class="field__input" type="text">
+        </label>
+        <label class="field">
+          <span class="field__label">เบอร์โทร <em>(ไม่บังคับ)</em></span>
+          <input id="signup-phone" class="field__input" type="tel">
+        </label>
+        <label class="field">
+          <span class="field__label">อีเมล (Gmail)</span>
+          <input id="signup-email" class="field__input" type="email" autocomplete="email" required>
+        </label>
+        <label class="field">
+          <span class="field__label">รหัสผ่าน <em>*อย่างน้อย 8 ตัวอักษร</em></span>
+          <input id="signup-password" class="field__input" type="password" autocomplete="new-password" required>
+        </label>
+        <label class="field">
+          <span class="field__label">ยืนยันรหัสผ่าน</span>
+          <input id="signup-confirm-password" class="field__input" type="password" autocomplete="new-password" required>
+        </label>
+        <button class="btn btn--submit" id="signup-submit-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+          สมัครสมาชิก
+        </button>
+        <p class="error-msg" id="signup-error-msg" hidden></p>
+      </section>
+
+      <section class="card" id="signup-verify-panel" hidden>
+        <h2 class="section-title">ยืนยันอีเมล</h2>
+        <p class="signup-verify-desc">ระบบได้ส่งรหัสยืนยัน 6 หลักไปที่ <strong id="signup-verify-email"></strong></p>
+        <p class="signup-demo-note" id="signup-demo-note" hidden>หมายเหตุ: ยังไม่ได้ตั้งค่าระบบส่งอีเมลจริงในเครื่องนี้ (โหมดทดสอบ) รหัสยืนยันคือ <strong id="signup-demo-code"></strong></p>
+        <label class="field">
+          <span class="field__label">รหัสยืนยัน 6 หลัก</span>
+          <input id="signup-verify-code" class="field__input" type="text" inputmode="numeric" maxlength="6">
+        </label>
+        <button class="btn btn--submit" id="signup-verify-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+          ยืนยัน
+        </button>
+        <p class="error-msg" id="signup-verify-error" hidden></p>
+        <button class="link-btn" id="signup-resend-btn">ส่งรหัสอีกครั้ง</button>
+      </section>
+    </section>
+
+    <!-- ========== หน้า: โปรไฟล์ ========== -->
+    <section class="view" id="view-profile" hidden>
+      <section class="card" id="profile-login-panel">
+        <div class="card-head-row">
+          <h2 class="section-title">เข้าสู่ระบบก่อนดูโปรไฟล์</h2>
+          <button class="back-link" id="profile-login-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <label class="field">
+          <span class="field__label">อีเมล (Gmail)</span>
+          <input id="profile-login-email" class="field__input" type="email" autocomplete="email">
+        </label>
+        <label class="field">
+          <span class="field__label">รหัสผ่าน</span>
+          <input id="profile-login-password" class="field__input" type="password" autocomplete="current-password">
+        </label>
+        <button class="btn btn--submit" id="profile-login-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          เข้าสู่ระบบ
+        </button>
+        <p class="error-msg" id="profile-login-error" hidden></p>
+        <button class="link-btn" id="profile-login-signup-link">ยังไม่มีบัญชี? สมัครสมาชิก</button>
+      </section>
+
+      <div class="view" id="profile-content" hidden>
+        <section class="card">
+          <div class="card-head-row">
+            <h2 class="section-title">โปรไฟล์</h2>
+            <button class="back-link" id="profile-content-back-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              กลับ
+            </button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">ข้อมูลส่วนตัว</h2>
+          <label class="field">
+            <span class="field__label">ชื่อ-นามสกุล</span>
+            <input id="profile-full-name" class="field__input" type="text">
+          </label>
+          <label class="field">
+            <span class="field__label">โรงพยาบาล/หน่วยงาน</span>
+            <input id="profile-hospital" class="field__input" type="text">
+          </label>
+          <label class="field">
+            <span class="field__label">เบอร์โทร</span>
+            <input id="profile-phone" class="field__input" type="tel">
+          </label>
+          <button class="btn btn--submit" id="profile-basic-save-btn">บันทึกข้อมูล</button>
+          <p class="success-msg" id="profile-basic-success-msg" hidden></p>
+          <p class="error-msg" id="profile-basic-error-msg" hidden></p>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">อีเมล</h2>
+          <p class="profile-current-value">อีเมลปัจจุบัน: <strong id="profile-current-email"></strong></p>
+          <label class="field">
+            <span class="field__label">อีเมลใหม่</span>
+            <input id="profile-new-email" class="field__input" type="email" autocomplete="email">
+          </label>
+          <button class="btn btn--outline" id="profile-email-request-btn">ขอรหัสยืนยันอีเมลใหม่</button>
+          <p class="success-msg" id="profile-email-success-msg" hidden></p>
+          <p class="error-msg" id="profile-email-error-msg" hidden></p>
+
+          <div class="profile-email-verify-panel" id="profile-email-verify-panel" hidden>
+            <p class="signup-verify-desc">ส่งรหัสยืนยัน 6 หลักไปที่ <strong id="profile-email-pending"></strong></p>
+            <p class="signup-demo-note" id="profile-email-demo-note" hidden>หมายเหตุ: ยังไม่ได้ตั้งค่าระบบส่งอีเมลจริงในเครื่องนี้ (โหมดทดสอบ) รหัสยืนยันคือ <strong id="profile-email-demo-code"></strong></p>
+            <label class="field">
+              <span class="field__label">รหัสยืนยัน 6 หลัก</span>
+              <input id="profile-email-code" class="field__input" type="text" inputmode="numeric" maxlength="6">
+            </label>
+            <button class="btn btn--submit" id="profile-email-confirm-btn">ยืนยันเปลี่ยนอีเมล</button>
+            <p class="error-msg" id="profile-email-verify-error" hidden></p>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="section-title">เปลี่ยนรหัสผ่าน</h2>
+          <label class="field">
+            <span class="field__label">รหัสผ่านเดิม</span>
+            <input id="profile-current-password" class="field__input" type="password" autocomplete="current-password">
+          </label>
+          <label class="field">
+            <span class="field__label">รหัสผ่านใหม่ <em>*อย่างน้อย 8 ตัวอักษร</em></span>
+            <input id="profile-new-password" class="field__input" type="password" autocomplete="new-password">
+          </label>
+          <label class="field">
+            <span class="field__label">ยืนยันรหัสผ่านใหม่</span>
+            <input id="profile-confirm-new-password" class="field__input" type="password" autocomplete="new-password">
+          </label>
+          <button class="btn btn--submit" id="profile-password-save-btn">เปลี่ยนรหัสผ่าน</button>
+          <p class="success-msg" id="profile-password-success-msg" hidden></p>
+          <p class="error-msg" id="profile-password-error-msg" hidden></p>
+        </section>
+
+        <button class="link-btn link-btn--danger" id="profile-logout-btn">ออกจากระบบ</button>
+      </div>
+    </section>
+
+    <!-- ========== หน้า: ทดสอบ ========== -->
+    <section class="view" id="view-check" hidden>
+
+      <!-- ----- ขั้นที่ 1: เข้าสู่ระบบ ----- -->
+      <section class="card" id="check-login-panel">
+        <div class="card-head-row">
+          <h2 class="section-title">เข้าสู่ระบบก่อนเริ่มทดสอบ</h2>
+          <button class="back-link" id="check-login-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <label class="field">
+          <span class="field__label">อีเมล (Gmail)</span>
+          <input id="check-login-email" class="field__input" type="email" autocomplete="email">
+        </label>
+        <label class="field">
+          <span class="field__label">รหัสผ่าน</span>
+          <input id="check-login-password" class="field__input" type="password" autocomplete="current-password">
+        </label>
+        <button class="btn btn--submit" id="check-login-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          เข้าสู่ระบบ
+        </button>
+        <p class="error-msg" id="check-login-error" hidden></p>
+        <button class="link-btn" id="check-login-signup-link">ยังไม่มีบัญชี? สมัครสมาชิก</button>
+      </section>
+
+      <!-- ----- แถบแสดงผู้ใช้ที่ล็อกอินอยู่ (โผล่หลังล็อกอินสำเร็จ) ----- -->
+      <section class="card check-session" id="check-session-panel" hidden>
+        <span class="check-session__text">เข้าสู่ระบบเป็น <strong id="check-session-name"></strong></span>
+        <button class="link-btn link-btn--danger" id="check-logout-btn">ออกจากระบบ</button>
+      </section>
+
+      <!-- ----- ขั้นที่ 2: เลือกจอภาพ ----- -->
+      <section class="card" id="check-display-panel" hidden>
+        <h2 class="section-title">เลือกจอภาพ</h2>
+        <label class="field">
+          <span class="field__label">จอภาพ</span>
+          <div class="field__select-wrap">
+            <select id="check-display-select" class="field__input field__input--select">
+              <option value="">— เลือกจอภาพ —</option>
+            </select>
+            <svg class="field__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </label>
+        <p class="error-msg" id="check-display-empty-msg" hidden>ยังไม่มีจอภาพในระบบ กรุณาลงทะเบียนจอภาพก่อน</p>
+      </section>
+
+      <!-- ----- ขั้นที่ 3: เลือกชุดทดสอบ ----- -->
+      <section class="card" id="check-pattern-panel" hidden>
+        <h2 class="section-title">เลือกชุดทดสอบ</h2>
+        <label class="field">
+          <span class="field__label">ชุดทดสอบ</span>
+          <div class="field__select-wrap">
+            <select id="pattern-select" class="field__input field__input--select">
+              <option value="">— เลือกชุดทดสอบ —</option>
+            </select>
+            <svg class="field__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </label>
+      </section>
+
+      <!-- ----- รูปตัวอย่างชุดทดสอบที่เลือก ----- -->
+      <section class="card" id="check-reference-panel" hidden>
+        <h2 class="section-title">ตัวอย่างรูปของชุดทดสอบ</h2>
+        <img class="reference-img" id="reference-img" alt="ตัวอย่างรูปของชุดทดสอบที่เลือก">
+        <p class="reference-hint">กรุณาถ่ายภาพจอแสดงผลให้ตรงกับชุดทดสอบ</p>
+      </section>
+
+      <!-- ----- ขั้นที่ 4: ถ่ายภาพ/วิเคราะห์ ----- -->
+      <section class="card" id="capture-panel" hidden>
+        <h2 class="section-title">ถ่ายภาพ/เลือกภาพถ่าย</h2>
+        <div class="capture" id="capture-empty">
+          <div class="capture__icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 8a2 2 0 0 1 2-2h1.5l1-1.5h7l1 1.5H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.4" stroke="currentColor" stroke-width="1.7"/></svg>
+          </div>
+          <p class="capture__hint">ถ่ายภาพจอแสดงผลโดยตรง หรือเลือกไฟล์ที่มีอยู่</p>
+          <div class="capture__actions">
+            <label class="btn btn--primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 8a2 2 0 0 1 2-2h1.5l1-1.5h7l1 1.5H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+              ถ่ายภาพ
+              <input type="file" accept="image/*" capture="environment" id="camera-input" hidden>
+            </label>
+            <label class="btn btn--ghost">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4l-4 4M12 4l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              เลือกไฟล์
+              <input type="file" accept="image/*" id="file-input" hidden>
+            </label>
+          </div>
+        </div>
+
+        <div class="preview" id="capture-preview" hidden>
+          <div class="preview__frame">
+            <img id="preview-img" alt="ภาพที่เลือก">
+            <button class="preview__remove" id="retake-btn" aria-label="เลือกภาพใหม่">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <button class="btn btn--submit" id="analyze-btn" disabled hidden>
+        <svg class="btn--submit__icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+        วิเคราะห์ผล
+      </button>
+
+      <p class="error-msg" id="error-msg" hidden></p>
+
+    </section>
+
+    <!-- ========== หน้า: ผลการทดสอบ (เข้าถึงได้หลังกดวิเคราะห์ผลสำเร็จเท่านั้น) ========== -->
+    <section class="view" id="view-result" hidden>
+      <section class="card" id="result-summary-panel">
+        <h2 class="section-title">สรุปผลการทดสอบ</h2>
+        <div class="result-meta">
+          <div class="result-meta__row"><span class="result-meta__label">ผู้ทดสอบ</span><span class="result-meta__value" id="result-meta-tester"></span></div>
+          <div class="result-meta__row"><span class="result-meta__label">จอภาพ</span><span class="result-meta__value" id="result-meta-display"></span></div>
+          <div class="result-meta__row"><span class="result-meta__label">ชุดทดสอบ</span><span class="result-meta__value" id="result-meta-pattern"></span></div>
+          <div class="result-meta__row"><span class="result-meta__label">วันที่</span><span class="result-meta__value" id="result-meta-date"></span></div>
+          <div class="result-meta__row"><span class="result-meta__label">เวลา</span><span class="result-meta__value" id="result-meta-time"></span></div>
+        </div>
+        <img class="result-processed-img" id="result-processed-img" alt="ภาพที่ผ่านการปรับมุมมองแล้ว" hidden>
+      </section>
+
+      <section class="card card--results" id="results-panel">
+        <div class="result-overall" id="result-overall"></div>
+        <div class="result-list" id="result-list"></div>
+      </section>
+
+      <button class="btn btn--outline" id="result-save-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        บันทึกผล
+      </button>
+      <p class="success-msg" id="result-save-msg" hidden></p>
+
+      <button class="btn btn--outline" id="result-pdf-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        ดาวน์โหลด PDF
+      </button>
+      <p class="error-msg" id="result-pdf-msg" hidden></p>
+
+      <button class="btn btn--outline" id="result-home-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 11l8-6.5 8 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        กลับหน้าแรก
+      </button>
+      <button class="btn btn--submit" id="result-again-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        ทดสอบอีกครั้ง
+      </button>
+    </section>
+
+    <!-- ========== หน้า: ประวัติ ========== -->
+    <section class="view" id="view-history" hidden>
+      <section class="card" id="history-login-panel">
+        <div class="card-head-row">
+          <h2 class="section-title">เข้าสู่ระบบก่อนดูประวัติ</h2>
+          <button class="back-link" id="history-login-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <label class="field">
+          <span class="field__label">อีเมล (Gmail)</span>
+          <input id="history-login-email" class="field__input" type="email" autocomplete="email">
+        </label>
+        <label class="field">
+          <span class="field__label">รหัสผ่าน</span>
+          <input id="history-login-password" class="field__input" type="password" autocomplete="current-password">
+        </label>
+        <button class="btn btn--submit" id="history-login-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          เข้าสู่ระบบ
+        </button>
+        <p class="error-msg" id="history-login-error" hidden></p>
+        <button class="link-btn" id="history-login-signup-link">ยังไม่มีบัญชี? สมัครสมาชิก</button>
+      </section>
+
+      <div class="view" id="history-content" hidden>
+        <div class="history-head">
+          <h2 class="history-head__title">ประวัติผลการทดสอบ</h2>
+          <div class="history-head__actions">
+            <button class="icon-btn" id="history-filter-btn" aria-label="กรองข้อมูล">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6.5 7.5V18l-3 2v-7.5L4 5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              <span class="icon-btn__dot" id="history-filter-dot" hidden></span>
+            </button>
+            <button class="back-link" id="history-back-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              กลับ
+            </button>
+          </div>
+        </div>
+        <div class="history-list" id="history-list"></div>
+        <div class="empty-state" id="history-empty" hidden>
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/></svg>
+          <p>ยังไม่มีประวัติการตรวจ</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== หน้า: เปรียบเทียบผลการทดสอบ ========== -->
+    <section class="view" id="view-compare" hidden>
+      <section class="card" id="compare-login-panel">
+        <div class="card-head-row">
+          <h2 class="section-title">เข้าสู่ระบบก่อนเปรียบเทียบผล</h2>
+          <button class="back-link" id="compare-login-back-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            กลับ
+          </button>
+        </div>
+        <label class="field">
+          <span class="field__label">อีเมล (Gmail)</span>
+          <input id="compare-login-email" class="field__input" type="email" autocomplete="email">
+        </label>
+        <label class="field">
+          <span class="field__label">รหัสผ่าน</span>
+          <input id="compare-login-password" class="field__input" type="password" autocomplete="current-password">
+        </label>
+        <button class="btn btn--submit" id="compare-login-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          เข้าสู่ระบบ
+        </button>
+        <p class="error-msg" id="compare-login-error" hidden></p>
+        <button class="link-btn" id="compare-login-signup-link">ยังไม่มีบัญชี? สมัครสมาชิก</button>
+      </section>
+
+      <div class="view" id="compare-content" hidden>
+        <section class="card">
+          <div class="card-head-row">
+            <h2 class="section-title">เปรียบเทียบผลการทดสอบ</h2>
+            <button class="back-link" id="compare-back-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              กลับ
+            </button>
+          </div>
+        </section>
+
+        <section class="card">
+          <label class="field">
+            <span class="field__label">จอภาพ</span>
+            <div class="field__select-wrap">
+              <select id="compare-display-select" class="field__input field__input--select">
+                <option value="">— เลือกจอภาพ —</option>
+              </select>
+              <svg class="field__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </label>
+          <label class="field">
+            <span class="field__label">ชุดทดสอบ</span>
+            <div class="field__select-wrap">
+              <select id="compare-pattern-select" class="field__input field__input--select" disabled>
+                <option value="">— เลือกชุดทดสอบ —</option>
+              </select>
+              <svg class="field__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </label>
+          <label class="field">
+            <span class="field__label">ครั้งที่ต้องการเปรียบเทียบ</span>
+            <div class="field__select-wrap">
+              <select id="compare-current-select" class="field__input field__input--select" disabled>
+                <option value="">— เลือกครั้งที่ —</option>
+              </select>
+              <svg class="field__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </label>
+          <label class="field">
+            <span class="field__label">Baseline <em>(ต้องเป็นครั้งก่อนหน้าครั้งที่เลือก)</em></span>
+            <div class="field__select-wrap">
+              <select id="compare-baseline-select" class="field__input field__input--select" disabled>
+                <option value="">— เลือก Baseline —</option>
+              </select>
+              <svg class="field__chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </label>
+          <p class="error-msg" id="compare-error-msg" hidden></p>
+          <button class="btn btn--submit" id="compare-run-btn" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+            เปรียบเทียบ
+          </button>
+        </section>
+
+        <section class="card card--results" id="compare-results-panel" hidden>
+          <div class="result-overall" id="compare-overall"></div>
+          <div class="result-list" id="compare-list"></div>
+        </section>
+
+        <button class="btn btn--outline" id="compare-pdf-btn" hidden>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          ดาวน์โหลด PDF
+        </button>
+        <p class="error-msg" id="compare-pdf-msg" hidden></p>
+      </div>
+    </section>
+
+    <!-- ----- ชีทกรองข้อมูลประวัติ (คล้ายแอพช้อปปิ้ง — เลือกได้หลายค่าต่อหมวด) ----- -->
+    <div class="sort-overlay" id="sort-overlay" hidden></div>
+    <div class="sort-sheet" id="sort-sheet" hidden aria-label="กรองข้อมูล">
+      <div class="sort-sheet__head">
+        <span class="sort-sheet__title">กรองข้อมูล</span>
+        <button class="sort-sheet__close" id="sort-sheet-close" aria-label="ปิด">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="sort-sheet__body">
+        <div class="filter-group">
+          <h3 class="filter-group__label">วันที่</h3>
+          <div class="filter-date-range">
+            <label class="filter-date-field">
+              <span>จาก</span>
+              <input type="date" id="filter-date-from" class="field__input">
+            </label>
+            <label class="filter-date-field">
+              <span>ถึง</span>
+              <input type="date" id="filter-date-to" class="field__input">
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-group__label">ผู้ใช้งาน</h3>
+          <div class="filter-checks" id="filter-tester-list"></div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-group__label">จอภาพ</h3>
+          <div class="filter-checks" id="filter-display-list"></div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-group__label">ชุดทดสอบ</h3>
+          <div class="filter-checks" id="filter-pattern-list"></div>
+        </div>
+
+        <div class="filter-group">
+          <h3 class="filter-group__label">ผลการทดสอบ</h3>
+          <div class="filter-checks">
+            <label class="filter-check"><input type="checkbox" value="Pass" data-filter="result"><span>ผ่าน</span></label>
+            <label class="filter-check"><input type="checkbox" value="Fail" data-filter="result"><span>ไม่ผ่าน</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="sort-sheet__footer">
+        <button class="link-btn" id="filter-clear-btn">ล้างตัวกรอง</button>
+        <button class="btn btn--submit" id="filter-apply-btn">แสดงผล</button>
+      </div>
+    </div>
+
+    <!-- ----- เทมเพลตรายงาน PDF (render นอกจอ แล้ว rasterize ด้วย html2canvas) ----- -->
+    <div id="pdf-report-root"></div>
+
+  </main>
+
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

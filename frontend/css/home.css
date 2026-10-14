@@ -1,0 +1,243 @@
+/* หน้าแรก: hero / about card */
+
+.hero-card {
+  align-items: center;
+  text-align: center;
+  padding: 26px 20px 24px;
+  gap: 18px;
+}
+
+.hero-institution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+}
+
+.hero-institution__logos {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.hero-institution__logos::before {
+  content: "";
+  position: absolute;
+  inset: -14px -20px;
+  z-index: -1;
+  background: radial-gradient(closest-side, var(--navy-soft) 0%, transparent 72%);
+  border-radius: 999px;
+}
+
+.hero-logo {
+  height: 52px;
+  width: auto;
+  max-width: 110px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.hero-institution__caption {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+
+.hero-desc {
+  background: linear-gradient(180deg, var(--surface-alt) 0%, var(--surface) 100%);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 16px 17px 16px 15px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.hero-desc p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ink-dim);
+  text-indent: 1.4em;
+}
+.hero-desc p strong { color: var(--ink); font-weight: 600; }
+.hero-desc p a { color: var(--accent-2); font-weight: 600; text-decoration: underline; }
+.hero-desc__note {
+  color: var(--ink-faint) !important;
+  font-size: 12px !important;
+  font-style: italic;
+}
+
+/* ---------- ลิงก์ท้ายหน้าแรก ---------- */
+.home-footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  padding: 4px 4px 0;
+}
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 6px 2px;
+}
+.footer-link:active { color: var(--ink-dim); }
+
+/* ---------- แถวหัวข้อ + ปุ่มย้อนกลับ (มุมขวาบนของกรอบขาว) ---------- */
+.card-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.card-head-row .section-title { margin: 0; }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 4px 2px;
+}
+.back-link:active { opacity: 0.6; }
+
+/* ---------- เอกสารอ้างอิง ---------- */
+.reference-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.reference-list li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-dim);
+}
+.reference-list em { font-style: italic; color: var(--ink); }
+
+/* ---------- รายละเอียดชุดทดสอบ ---------- */
+.section-title--lg { font-size: 17px; }
+.testset-card { gap: 14px; }
+.testset-card__img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+.testset-card__name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.testset-card__section h4 {
+  margin: 0 0 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.testset-card__section p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+.testset-card__list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.testset-card__list li {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.testset-card__list strong { color: var(--ink); }
+.testset-card__criteria {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-top: 6px !important;
+}
+.testset-card__criteria--pass { background: var(--pass-soft); color: var(--pass) !important; }
+.testset-card__criteria--fail { background: var(--fail-soft); color: var(--fail) !important; }
+.testset-card__criteria strong { color: inherit; }
+
+/* ---------- คำถามที่พบบ่อย (FAQ) ---------- */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.faq-item {
+  padding: 13px 14px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+}
+.faq-item__q {
+  margin: 0 0 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.faq-item__a {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+
+/* ---------- ทีมผู้พัฒนา ---------- */
+.team-card { gap: 16px; }
+
+.team-group { display: flex; flex-direction: column; gap: 8px; }
+.team-group__label {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.team-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.team-list__faculty {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+}
+
+.team-list li {
+  font-size: 13px;
+  color: var(--ink-dim);
+  padding: 9px 12px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-sm);
+}

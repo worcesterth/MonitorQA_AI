@@ -1,0 +1,87 @@
+/* ปุ่ม hamburger ในแถบบน */
+.menu-btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--navy-deep);
+  cursor: pointer;
+}
+.menu-btn:active { background: var(--surface-alt); }
+
+/* ฉากหลังทึบเมื่อเปิดเมนู */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 16, 28, 0);
+  z-index: 40;
+  transition: background 0.22s ease;
+}
+.menu-overlay.is-open { background: rgba(10, 16, 28, 0.45); }
+
+/* แผงเมนูเลื่อนจากขวา */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(78vw, 300px);
+  background: var(--surface);
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 14px calc(18px + env(safe-area-inset-bottom));
+  box-shadow: -8px 0 28px -8px rgba(10, 16, 28, 0.35);
+  transform: translateX(100%);
+  transition: transform 0.22s ease;
+}
+.drawer.is-open { transform: translateX(0); }
+
+.drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 16px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.drawer__head-title { font-size: 13px; font-weight: 700; color: var(--ink-dim); letter-spacing: 0.02em; }
+.drawer__close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-alt);
+  border: none;
+  border-radius: 50%;
+  color: var(--ink-dim);
+  cursor: pointer;
+}
+.drawer__close:active { opacity: 0.7; }
+
+.drawer__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 13px 12px;
+  font-family: var(--font-ui);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  text-align: left;
+  cursor: pointer;
+}
+.drawer__item svg { flex-shrink: 0; }
+.drawer__item:active { background: var(--surface-alt); }
+.drawer__item.is-active { color: var(--navy-deep); background: var(--navy-soft); }

@@ -1,0 +1,16 @@
+# ไม่ push ขึ้น git
+docs/
+manual/
+
+# ข้อมูลลับ (ใช้ backend/.env.example เป็นแม่แบบ)
+.env
+
+# ฐานข้อมูลที่มีข้อมูลผู้ใช้จริง (สร้างใหม่อัตโนมัติตอนรัน)
+backend/data/*.db
+
+# Python / ระบบ
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store

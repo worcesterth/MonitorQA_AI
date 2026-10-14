@@ -1,0 +1,113 @@
+/* เทมเพลตรายงาน PDF — render นอกจอเสมอ (ห้ามใช้ display:none/hidden เพราะ html2canvas
+   ต้องการให้ element มี layout จริงถึงจะ capture ได้) แล้วค่อย rasterize ด้วย html2canvas
+   ตอนกด "ดาวน์โหลด PDF" จาก result.js / history.js / compare.js — ใช้ฟอนต์ Sarabun (ฟอนต์มาตรฐาน
+   เอกสารราชการไทย) ให้ดูเป็นทางการ ขนาดถูกออกแบบให้เนื้อหาทั้งหมดพอดี 1 หน้า A4 (rasterizeAndSave
+   ใน pdfReport.js มีการย่อภาพบังคับให้พอดี 1 หน้าเสมอเป็นตาข่ายนิรภัยอีกชั้นด้วย) */
+#pdf-report-root {
+  position: absolute;
+  top: 0;
+  left: -99999px;
+  width: 794px;
+  background: #ffffff;
+  /* กันมือถือ (WebKit/Chrome mobile) ขยายขนาดตัวอักษรอัตโนมัติเพื่อความอ่านง่าย (text inflation) —
+     ถ้าไม่ปิด ฟอนต์ในไฟล์ PDF จะใหญ่กว่าตอนโหลดจากคอมทั้งที่ CSS เหมือนกันทุกตัวอักษร */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+#pdf-report-root * {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.pdf-report {
+  width: 794px;
+  padding: 28px 34px;
+  background: #ffffff;
+  color: #202632;
+  font-family: "Sarabun", "Noto Sans Thai", sans-serif;
+  box-sizing: border-box;
+}
+.pdf-report__title {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid #0d3f8f;
+}
+.pdf-report__line { font-size: 10.5px; margin: 0 0 3px; line-height: 1.55; }
+.pdf-report__overall { font-size: 12px; font-weight: 700; margin: 10px 0 12px; }
+.pdf-report__overall--pass { color: #1f9d63; }
+.pdf-report__overall--fail { color: #dd5353; }
+.pdf-report__overall--drift { color: #c73f08; }
+
+.pdf-report table { width: 100%; border-collapse: collapse; font-size: 9.5px; margin-bottom: 14px; }
+.pdf-report th, .pdf-report td { border: 1px solid #ccd2dd; padding: 5px 7px; text-align: left; vertical-align: top; line-height: 1.45; }
+.pdf-report th { background: #eaeef6; font-weight: 700; color: #0d3f8f; }
+.pdf-report td.pdf-report__result-cell { text-align: center; font-weight: 700; white-space: nowrap; }
+.pdf-report td.pdf-report__result-cell--pass { color: #1f9d63; }
+.pdf-report td.pdf-report__result-cell--fail { color: #dd5353; }
+.pdf-report td.pdf-report__result-cell--na { color: #888888; }
+
+/* ตาราง mode01-16 แบบมีสี (ใช้ .mode-color-table ร่วมกับหน้าแอป — components.css) — override ขนาด
+   ให้กระชับเข้ากับรายงานที่ต้องพอดี 1 หน้า A4 */
+.pdf-report__mode-title { font-size: 9px; font-weight: 700; color: #45506b; margin: 0 0 4px; }
+.pdf-report .mode-color-table { margin: 0 0 12px; }
+.pdf-report .mode-color-cell { height: 20px; }
+.pdf-report .mode-value-cell { font-size: 8px; padding: 2px 4px; }
+
+.pdf-report__photos { display: flex; gap: 12px; margin-bottom: 14px; }
+.pdf-report__photo-col { flex: 1; min-width: 0; }
+.pdf-report__photo-label { font-size: 8.5px; font-weight: 700; margin: 0 0 4px; color: #45506b; }
+.pdf-report__photo-subrow { display: flex; gap: 8px; }
+.pdf-report__photo-subcol { flex: 1; min-width: 0; }
+.pdf-report__photo-sublabel { font-size: 7.5px; font-weight: 600; margin: 0 0 3px; color: #6b7280; text-align: center; }
+/* กรอบสูงคงที่ + จัดกึ่งกลางด้วย flexbox แทน object-fit (html2canvas render object-fit ไม่ถูกต้อง ทำให้รูปยืด) —
+   รูปข้างในใช้ max-width/max-height + auto แทน เพื่อคงสัดส่วนจริงของรูปเสมอ ไม่ยืด/บีบ */
+.pdf-report__photo-frame {
+  height: 105px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f6f8;
+  border: 1px solid #ccd2dd;
+  overflow: hidden;
+}
+.pdf-report__photo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+/* ใช้กับรายงานผลเดี่ยวที่มีแค่รูปถ่ายจริงรูปเดียว (ไม่มีรูปที่วิเคราะห์คู่กัน) — ขยายกรอบให้ใหญ่ขึ้น
+   เพราะมีพื้นที่เหลือเยอะกว่าตอนวางรูปคู่กัน 2 รูป */
+.pdf-report__photo-frame--large { height: 300px; }
+/* ใช้กับรายงานเปรียบเทียบ — baseline/ครั้งนี้ วางข้างกัน 2 คอลัมน์ คอลัมน์ละรูปเดียว (ตัดรูปที่
+   วิเคราะห์ออกแล้ว) เลยขยายได้มากกว่าเดิม (105px) แต่ไม่เท่ารายงานเดี่ยวเพราะยังมี 2 คอลัมน์ */
+.pdf-report__photo-frame--medium { height: 190px; }
+
+/* ตาราง mode01-16 ของรายงานเปรียบเทียบ — วาง baseline/ครั้งนี้ ข้างกัน 2 คอลัมน์ */
+.pdf-report__mode-row { display: flex; gap: 12px; margin-bottom: 12px; }
+.pdf-report__mode-col { flex: 1; min-width: 0; }
+
+.pdf-report__disclaimer {
+  font-size: 8px;
+  line-height: 1.55;
+  color: #5a6270;
+  background: #f7f7f8;
+  border: 1px solid #e2e4ea;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin: 0;
+}
+.pdf-report__disclaimer strong { font-size: 8.5px; color: #202632; }
+
+.pdf-report__sign {
+  margin-top: 22px;
+  padding-top: 10px;
+  text-align: right;
+  font-size: 9.5px;
+  line-height: 1.7;
+}
